@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/auth/login/**",
                         "/auth/logout/**",
                         "/auth/register",
-                        "/category/all").permitAll()
+                        "/category/all",
+                        "/product/all/**").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()

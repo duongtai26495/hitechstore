@@ -21,9 +21,39 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
+    private String author;
+
     private boolean active;
 
+    private String createdAt;
+
+    private String lastEditedAt;
+
     public Product() {
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getLastEditedAt() {
+        return lastEditedAt;
+    }
+
+    public void setLastEditedAt(String lastEditedAt) {
+        this.lastEditedAt = lastEditedAt;
     }
 
     public boolean isActive() {
