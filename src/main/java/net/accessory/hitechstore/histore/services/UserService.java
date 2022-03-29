@@ -8,4 +8,7 @@ public interface UserService {
     ResponseEntity<ResponseObject> saveNewUser(User user);
 
     ResponseEntity<ResponseObject> editUserByUsername(User user);
+
+    ResponseEntity<ResponseObject>  updatePassword(User user);
+
 }

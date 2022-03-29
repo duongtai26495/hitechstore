@@ -19,4 +19,17 @@ public class AuthController {
     public ResponseEntity<ResponseObject> register(@RequestBody User user){
         return userService.saveNewUser(user);
     }
+
+    @PutMapping("edit/{username}")
+    public ResponseEntity<ResponseObject> updateInfo(@PathVariable String username, @RequestBody User user){
+        user.setUsername(username);
+        return userService.editUserByUsername(user);
+    }
+
+    @PutMapping("updatepw/{username}")
+    public ResponseEntity<ResponseObject> updatePassword(@PathVariable String username, @RequestBody User user){
+        user.setUsername(username);
+        return  userService.updatePassword(user);
+    }
+
 }

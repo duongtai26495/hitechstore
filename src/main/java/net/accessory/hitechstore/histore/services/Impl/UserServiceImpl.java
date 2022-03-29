@@ -68,6 +68,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public ResponseEntity<ResponseObject> editUserByUsername(User user) {
-        return null;
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+        User getUser = userRepository.findByUsername(user.getUsername());
+        getUser.setFullName(user.getFullName());
+        getUser.setGender(user.getGender());
+        getUser.setLastEdited(sdf.format(date));
+        UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(getUser));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("SUCCESS","Edit info user successfully",userDTO)
+        );
     }
+
+    @Override
+    public ResponseEntity<ResponseObject> updatePassword(User user) {
+        User getUser = userRepository.findByUsername(user.getUsername());
+        getUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(getUser));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("SUCCESS","Password changed",userDTO)
+        );
+    }
+
+
 }

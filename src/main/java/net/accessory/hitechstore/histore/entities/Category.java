@@ -21,7 +21,47 @@ public class Category {
     @JsonIgnore
     private List<Product> products;
 
+    private String author;
+
+    private String createdAt;
+
+    private String lastEditedAt;
+
+    private boolean active;
+
     public Category() {
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getLastEditedAt() {
+        return lastEditedAt;
+    }
+
+    public void setLastEditedAt(String lastEditedAt) {
+        this.lastEditedAt = lastEditedAt;
     }
 
     public Long getId() {
