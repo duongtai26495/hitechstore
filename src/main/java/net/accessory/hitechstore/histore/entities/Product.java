@@ -19,18 +19,67 @@ public class Product {
     private Category category;
 
     @Column(name = "image_url")
-    private String imageUrl;
+    private String image_url;
+
+    private Double price = 0.0d;
+
+    private Double sale_rate = 0.0d;
+
+    private int quantity;
 
     private String author;
 
     private boolean active;
 
-    private String createdAt;
+    private String created_at;
 
-    private String lastEditedAt;
+    private String last_edited_at;
 
     public Product() {
     }
+
+    @ManyToOne()
+    @JoinColumn(name = "brand", referencedColumnName = "brand_id")
+    private Brand brand;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Double getSale_price() {
+        return price-(price*(sale_rate/100));
+    }
+
+    public void setSale_price(Double sale_price) {
+    }
+
+    public Double getSale_rate() {
+        return sale_rate;
+    }
+
+    public void setSale_rate(Double sale_rate) {
+        this.sale_rate = sale_rate;
+    }
+
 
     public String getAuthor() {
         return author;
@@ -40,20 +89,20 @@ public class Product {
         this.author = author;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getLastEditedAt() {
-        return lastEditedAt;
+    public String getLast_edited_at() {
+        return last_edited_at;
     }
 
-    public void setLastEditedAt(String lastEditedAt) {
-        this.lastEditedAt = lastEditedAt;
+    public void setLast_edited_at(String last_edited_at) {
+        this.last_edited_at = last_edited_at;
     }
 
     public boolean isActive() {
@@ -88,11 +137,11 @@ public class Product {
         this.category = category;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }

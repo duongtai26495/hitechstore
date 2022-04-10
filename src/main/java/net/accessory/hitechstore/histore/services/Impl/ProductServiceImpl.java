@@ -26,9 +26,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-
-
-
     private final String DATE_PATTERN = "dd/mm/yy hh:mm:ss";
 
 
@@ -42,33 +39,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<ResponseObject> saveNew(Product product) {
-        List<Product> products = productRepository.findAll();
-        boolean isExist = false;
-        for (Product check: products) {
-            if (check.getName().
-                    toLowerCase().
-                    trim().
-                    equals(product.getName().
-                            toLowerCase().
-                            trim())) {
-                isExist = true;
-                break;
+
+            if (isExistByName(product.getName())){
+                Product getProduct = productRepository.getProductByName(product.getName());
+                getProduct.setQuantity(getProduct.getQuantity()+product.getQuantity());
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+                getProduct.setLast_edited_at(sdf.format(date));
+                getProduct.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
+                return ResponseEntity.status(HttpStatus.OK).body(
+                        new ResponseObject("SUCCESS","Edit product is successful",productRepository.save(getProduct))
+                );
+            }else{
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+                product.setCreated_at(sdf.format(date));
+                product.setLast_edited_at(product.getCreated_at());
+                product.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
+                return ResponseEntity.status(HttpStatus.OK).body(
+                        new ResponseObject("SUCCESS","Create new product is successful",productRepository.save(product))
+                );
             }
-        }
-        if(!isExist){
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-            product.setCreatedAt(sdf.format(date));
-            product.setLastEditedAt(product.getCreatedAt());
-            product.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
-            return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("SUCCESS","Create new product is successful",productRepository.save(product))
-            );
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("FAILURE","Category with this name already taken",null)
-            );
-        }
+
+
     }
 
     @Override
@@ -78,19 +71,22 @@ public class ProductServiceImpl implements ProductService {
        if (productRepository.existsById(product.getId())){
            Product getProduct = productRepository.findById(product.getId()).get();
            getProduct.setId(product.getId());
-           getProduct.setActive(product.isActive());
-           getProduct.setImageUrl(product.getImageUrl());
            getProduct.setName(product.getName());
-           getProduct.setLastEditedAt(sdf.format(date));
+           getProduct.setBrand(product.getBrand());
+           getProduct.setPrice(product.getPrice());
+           getProduct.setQuantity(getProduct.getQuantity()+product.getQuantity());
+           getProduct.setSale_rate(product.getSale_rate());
+           getProduct.setImage_url(product.getImage_url());
            getProduct.setCategory(product.getCategory());
+           getProduct.setActive(product.isActive());
+           getProduct.setLast_edited_at(sdf.format(date));
+           getProduct.setSale_price(product.getSale_price());
            return ResponseEntity.status(HttpStatus.OK).body(
                    new ResponseObject("SUCCESS","Edit product is successful",productRepository.save(getProduct))
            );
        }else{
            return saveNew(product);
        }
-
-
     }
 
     @Override
@@ -105,6 +101,30 @@ public class ProductServiceImpl implements ProductService {
                     new ResponseObject("FAILED","Product not found",null)
             );
         }
+    }
+
+    @Override
+    public ResponseEntity<ResponseObject> getProductById(Long id) {
+        if(productRepository.existsById(id)){
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("SUCCESS","Product with id "+id+ " founded",productRepository.getProductById(id))
+            );
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("FAILED","Product with id "+id+" not found",null)
+        );
+    }
+
+
+    @Override
+    public boolean isExistByName(String name) {
+        List<Product> products = productRepository.findAll();
+        for (Product p : products){
+            if(name.toLowerCase().trim().equals(p.getName().toLowerCase().trim())){
+                return true;
+            }
+        }
+        return false;
     }
 
 

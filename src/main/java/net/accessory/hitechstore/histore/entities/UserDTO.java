@@ -4,20 +4,21 @@ public class UserDTO {
 
     private Long id;
 
-    private String fullName;
+    private String full_name;
 
     private String email;
 
     private String username;
 
-    private String joinedAt;
+    private String joined_at;
 
-    private String lastEdited;
+    private String last_edited;
 
     private int active;
 
     private int gender;
 
+    private String avatar;
 
     private Role role;
 
@@ -40,13 +41,6 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public String getEmail() {
         return email;
@@ -64,20 +58,36 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getJoinedAt() {
-        return joinedAt;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setJoinedAt(String joinedAt) {
-        this.joinedAt = joinedAt;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
-    public String getLastEdited() {
-        return lastEdited;
+    public String getJoined_at() {
+        return joined_at;
     }
 
-    public void setLastEdited(String lastEdited) {
-        this.lastEdited = lastEdited;
+    public void setJoined_at(String joined_at) {
+        this.joined_at = joined_at;
+    }
+
+    public String getLast_edited() {
+        return last_edited;
+    }
+
+    public void setLast_edited(String last_edited) {
+        this.last_edited = last_edited;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getActive() {

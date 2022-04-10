@@ -39,8 +39,8 @@ public class CategoryServiceImpl implements CategoryService {
         if (getUsernameLogin()!=null){
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-            category.setCreatedAt(sdf.format(date));
-            category.setLastEditedAt(category.getCreatedAt());
+            category.setCreated_at(sdf.format(date));
+            category.setLast_edited_at(category.getCreated_at());
             category.setAuthor(getUsernameLogin());
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("SUCCESS","Create new category is successful",categoryRepository.save(category))
@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
             Category categoryFound = categoryRepository.findById(category.getId()).get();
             categoryFound.setActive(category.isActive());
             categoryFound.setName(category.getName());
-            categoryFound.setLastEditedAt(sdf.format(date));
+            categoryFound.setLast_edited_at(sdf.format(date));
 
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("SUCCESS","Edit category is successful",categoryRepository.save(categoryFound))

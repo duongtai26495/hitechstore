@@ -23,9 +23,9 @@ public class Category {
 
     private String author;
 
-    private String createdAt;
+    private String created_at;
 
-    private String lastEditedAt;
+    private String last_edited_at;
 
     private boolean active;
 
@@ -48,20 +48,20 @@ public class Category {
         this.author = author;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getLastEditedAt() {
-        return lastEditedAt;
+    public String getLast_edited_at() {
+        return last_edited_at;
     }
 
-    public void setLastEditedAt(String lastEditedAt) {
-        this.lastEditedAt = lastEditedAt;
+    public void setLast_edited_at(String last_edited_at) {
+        this.last_edited_at = last_edited_at;
     }
 
     public Long getId() {

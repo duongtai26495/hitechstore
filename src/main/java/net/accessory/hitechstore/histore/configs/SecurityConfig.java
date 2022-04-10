@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
         http
                 .cors().configurationSource(corsConfigurationSource())
@@ -42,18 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests().antMatchers(
-                "/auth/login",
-                        "/auth/login/**",
-                        "/auth/logout/**",
-                        "/auth/register",
-                        "/category/all",
-                        "/product/all/**",
-                        "/product/images/*").permitAll()
+                        "/api/**").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/product/**","/category/**").hasAuthority("ROLE_ADMIN")
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .logout()
-                .logoutUrl("/auth/logout")
+                .logoutUrl("/api/logout")
                 .and()
                 .addFilter(customAuthenticationFilter)
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

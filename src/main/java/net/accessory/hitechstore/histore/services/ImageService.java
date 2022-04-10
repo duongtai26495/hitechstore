@@ -10,6 +10,6 @@ import java.util.stream.Stream;
 public interface ImageService{
 public String storeFile(MultipartFile file);
 public Stream<Path> loadAllImage();
-public byte[] readFile(String fileName);
+public ResponseEntity<byte[]> readFile(String fileName);
 public void deleteFile();
 }

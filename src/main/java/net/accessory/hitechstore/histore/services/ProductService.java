@@ -15,4 +15,9 @@ public interface ProductService {
     ResponseEntity<ResponseObject> editById(Product product);
 
     ResponseEntity<ResponseObject> deleteById(Long id);
+
+    ResponseEntity<ResponseObject> getProductById(Long id);
+
+    boolean isExistByName(String name);
+
 }

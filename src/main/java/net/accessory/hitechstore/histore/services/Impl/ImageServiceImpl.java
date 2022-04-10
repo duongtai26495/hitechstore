@@ -4,6 +4,8 @@ import net.accessory.hitechstore.histore.services.ImageService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -76,18 +78,21 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public byte[] readFile(String fileName) {
+    public ResponseEntity<byte[]> readFile(String fileName) {
         try {
             Path file = storageFolder.resolve(fileName);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()){
                 byte[] bytes = StreamUtils.copyToByteArray(resource.getInputStream());
-                return bytes;
+                return ResponseEntity
+                        .ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(bytes);
             }else{
-                throw new RuntimeException("Could not read file "+fileName);
+                return ResponseEntity.noContent().build();
             }
         }catch (IOException e){
-            throw new RuntimeException("Could not read file "+fileName, e);
+            return ResponseEntity.noContent().build();
         }
 
     }

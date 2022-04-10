@@ -15,11 +15,6 @@ public class CategoryController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
-    @GetMapping("all")
-    public ResponseEntity<ResponseObject> getAll(){
-        return categoryService.getAll();
-    }
-
     @PostMapping("new")
     public ResponseEntity<ResponseObject> createNew(@RequestBody Category category){
         return categoryService.saveNewCategory(category);

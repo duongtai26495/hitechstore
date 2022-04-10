@@ -13,11 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/product/")
+@CrossOrigin
 public class ProductController {
 
     @Autowired
@@ -27,35 +30,10 @@ public class ProductController {
     private ImageServiceImpl imageService;
 
 
-    @PostMapping("uploadImage")
-    public ResponseEntity<ResponseObject> uploadImage(@RequestParam("image")MultipartFile file){
-        try{
-            String generateFile = imageService.storeFile(file);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("SUCCESS","Upload image success",generateFile)
-            );
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("FAILED","Upload image failed",null)
-            );
-        }
-    }
-    @GetMapping("images/{fileName:.+}")
-    public ResponseEntity<byte[]> readFile (@PathVariable String fileName){
-            try {
-                byte[] bytes = imageService.readFile(fileName);
-                return ResponseEntity
-                        .ok()
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(bytes);
-            }catch (Exception e){
-                return ResponseEntity.noContent().build();
-            }
-    }
 
-    @GetMapping("all")
-    public List<Product> getAllProducts(@RequestParam("page") Integer page, @RequestParam("per") Integer per){
-        return productService.getAll(page,per);
+    @PostMapping("uploadImage")
+    public String uploadImage(@RequestParam("image")MultipartFile file){
+      return imageService.storeFile(file);
     }
 
     @PostMapping("new")

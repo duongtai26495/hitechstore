@@ -42,27 +42,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public ResponseEntity<ResponseObject> saveNewUser(User user) {
         if(userRepository.findByUsername(user.getUsername()) != null){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+            return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("FAILED","This user with username "+user.getUsername()+" already taken!",null)
             );
         }
         if(userRepository.findByEmail(user.getEmail()) != null){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+            return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("FAILED","This user with email "+user.getEmail()+" already taken!",null)
             );
         }
         List<Role> roleList = roleService.getAll();
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-        user.setJoinedAt(sdf.format(date));
-        user.setLastEdited(sdf.format(date));
+        user.setJoined_at(sdf.format(date));
+        user.setLast_edited(sdf.format(date));
         user.setRole(roleList.get(0));
-        user.setGender(0);
         user.setActive(1);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(user));
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("SUCCESSFULLY","User created",userDTO)
+                new ResponseObject("SUCCESS","User created",userDTO)
         );
     }
 
@@ -71,9 +70,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
         User getUser = userRepository.findByUsername(user.getUsername());
-        getUser.setFullName(user.getFullName());
+        getUser.setFull_name(user.getFull_name());
         getUser.setGender(user.getGender());
-        getUser.setLastEdited(sdf.format(date));
+        getUser.setLast_edited(sdf.format(date));
         UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(getUser));
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("SUCCESS","Edit info user successfully",userDTO)
