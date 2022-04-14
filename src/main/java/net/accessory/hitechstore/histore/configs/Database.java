@@ -20,6 +20,9 @@ public class Database {
             public void run(String... args) throws Exception {
                 Role role_user = new Role("ROLE_USER");
                 Role role_admin = new Role("ROLE_ADMIN");
+                roleService.saveNewRole(role_user);
+                roleService.saveNewRole(role_admin);
+
                 User user_admin = new User();
                 user_admin.setFull_name("Dương Minh Tài");
                 user_admin.setUsername("duongtai264");
@@ -29,8 +32,6 @@ public class Database {
                 user_admin.setPassword("Blackhat1");
                 user_admin.setRole(role_admin);
                 userService.saveNewUser(user_admin);
-                roleService.saveNewRole(role_user);
-                roleService.saveNewRole(role_admin);
             }
         };
     }
