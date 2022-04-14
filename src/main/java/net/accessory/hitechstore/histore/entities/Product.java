@@ -35,7 +35,7 @@ public class Product {
 
     private String last_edited_at;
 
-    @Column(name = "description", length = 255)
+    @Column(name = "description", length = 1000)
     private String description;
 
     public Product() {
