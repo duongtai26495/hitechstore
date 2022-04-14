@@ -65,17 +65,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public ResponseEntity<ResponseObject> editUserByUsername(User user) {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
-        User getUser = userRepository.findByUsername(user.getUsername());
-        getUser.setFull_name(user.getFull_name());
-        getUser.setRole(user.getRole());
-        getUser.setGender(user.getGender());
-        getUser.setLast_edited(sdf.format(date));
-        UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(getUser));
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("SUCCESS","Edit info user successfully",userDTO)
-        );
+        if (GetCurrentUsername.getUsernameLogin() != null ||
+        GetCurrentUsername.getUsernameLogin().equals(user.getUsername())){
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+            User getUser = userRepository.findByUsername(user.getUsername());
+            getUser.setFull_name(user.getFull_name());
+            getUser.setRole(user.getRole());
+            getUser.setGender(user.getGender());
+            getUser.setLast_edited(sdf.format(date));
+            UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(getUser));
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("SUCCESS","Edit info user successfully",userDTO)
+            );
+        }else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                    new ResponseObject("FAILED","User do not login or not permission",null)
+            );
+        }
+
     }
 
     @Override
@@ -90,18 +98,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public ResponseEntity<ResponseObject> getProfileByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user != null){
+        if (GetCurrentUsername.getUsernameLogin() != null ||
+                GetCurrentUsername.getUsernameLogin().equals(username)) {
+            User user = userRepository.findByUsername(username);
             UserDTO userDTO = ConvertUser.convertToDTO(user);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("SUCCESS","User found", userDTO)
+                    new ResponseObject("SUCCESS", "User found", userDTO)
             );
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("FAILED","User not found", null)
+                    new ResponseObject("FAILED", "User not found or not permission", null)
             );
         }
     }
-
-
 }
