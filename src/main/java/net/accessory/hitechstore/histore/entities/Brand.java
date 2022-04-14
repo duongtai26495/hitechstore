@@ -22,7 +22,27 @@ public class Brand {
     @OneToMany(targetEntity = Product.class, mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
 
+    private String image_url;
+
     public Brand() {
+    }
+
+    public String getCode_name() {
+        String code_name = name.toLowerCase();
+        code_name = code_name.trim();
+        code_name = code_name.replace(" ","-");
+        return code_name;
+    }
+
+    public void setCode_name(String code_name) {
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public Long getId() {

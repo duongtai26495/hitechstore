@@ -1,12 +1,10 @@
 package net.accessory.hitechstore.histore.controllers;
 
+import net.accessory.hitechstore.histore.entities.Brand;
 import net.accessory.hitechstore.histore.entities.Product;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.entities.User;
-import net.accessory.hitechstore.histore.services.Impl.CategoryServiceImpl;
-import net.accessory.hitechstore.histore.services.Impl.ImageServiceImpl;
-import net.accessory.hitechstore.histore.services.Impl.ProductServiceImpl;
-import net.accessory.hitechstore.histore.services.Impl.UserServiceImpl;
+import net.accessory.hitechstore.histore.services.Impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +27,17 @@ public class HomeController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private BrandServiceImpl brandService;
 
     @GetMapping("categories")
     public ResponseEntity<ResponseObject> getAll(){
         return categoryService.getAll();
+    }
+
+    @GetMapping("brands")
+    public List<Brand> getAllBrands(){
+        return brandService.getAll();
     }
 
     @GetMapping("products")
@@ -40,6 +45,16 @@ public class HomeController {
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "12") Integer per){
         return productService.getAll(page,per);
+    }
+
+    @GetMapping("brand/{code_name}")
+    public List<Product> getProductsByBrand(@PathVariable String code_name){
+        return productService.getProductsByBrandName(code_name);
+    }
+
+    @GetMapping("category/{code_name}")
+    public List<Product> getProductsByCategory(@PathVariable String code_name){
+        return productService.getProductsByCategoryName(code_name);
     }
 
     @GetMapping("products/{id}")

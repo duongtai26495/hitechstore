@@ -20,4 +20,7 @@ public interface ProductService {
 
     boolean isExistByName(String name);
 
+    List<Product> getProductsByBrandName(String code_name);
+
+    List<Product> getProductsByCategoryName(String code_name);
 }

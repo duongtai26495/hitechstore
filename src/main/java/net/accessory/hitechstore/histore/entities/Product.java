@@ -35,12 +35,23 @@ public class Product {
 
     private String last_edited_at;
 
+    @Column(name = "description", length = 255)
+    private String description;
+
     public Product() {
     }
 
     @ManyToOne()
     @JoinColumn(name = "brand", referencedColumnName = "brand_id")
     private Brand brand;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public int getQuantity() {
         return quantity;

@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -127,5 +128,27 @@ public class ProductServiceImpl implements ProductService {
         return false;
     }
 
+    @Override
+    public List<Product> getProductsByBrandName(String code_name) {
+        List<Product> products = productRepository.findAll();
+        List<Product> getProducts = new ArrayList<>();
+        for (Product product: products){
+            if(product.getBrand().getCode_name().equals(code_name)){
+                getProducts.add(product);
+            }
+        }
+        return getProducts;
+    }
 
+    @Override
+    public List<Product> getProductsByCategoryName(String code_name) {
+        List<Product> products = productRepository.findAll();
+        List<Product> getProducts = new ArrayList<>();
+        for (Product product: products){
+            if(product.getCategory().getCode_name().equals(code_name)){
+                getProducts.add(product);
+            }
+        }
+        return getProducts;
+    }
 }

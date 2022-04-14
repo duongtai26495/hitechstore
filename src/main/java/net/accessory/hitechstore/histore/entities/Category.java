@@ -14,7 +14,7 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @Column(name = "category_name")
+    @Column(name = "category_name", unique = true)
     private String name;
 
     @OneToMany(targetEntity = Product.class, mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -30,6 +30,13 @@ public class Category {
     private boolean active;
 
     public Category() {
+    }
+
+    public String getCode_name() {
+        String code_name = name.toLowerCase();
+        code_name = code_name.trim();
+        code_name = code_name.replace(" ","-");
+        return code_name;
     }
 
     public boolean isActive() {

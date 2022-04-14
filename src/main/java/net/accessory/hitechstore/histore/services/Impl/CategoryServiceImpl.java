@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<ResponseObject> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("SUCCESS","All of category", categoryRepository.findAllCategory())
+                new ResponseObject("SUCCESS","All of category", categoryRepository.findAll())
         );
     }
 }

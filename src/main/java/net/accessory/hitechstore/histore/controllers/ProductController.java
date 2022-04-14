@@ -2,6 +2,7 @@ package net.accessory.hitechstore.histore.controllers;
 
 import net.accessory.hitechstore.histore.entities.Product;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
+import net.accessory.hitechstore.histore.services.Impl.CategoryServiceImpl;
 import net.accessory.hitechstore.histore.services.Impl.ImageServiceImpl;
 import net.accessory.hitechstore.histore.services.Impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ProductController {
     @Autowired
     private ImageServiceImpl imageService;
 
+    @Autowired
+    private CategoryServiceImpl categoryService;
 
 
     @PostMapping("uploadImage")

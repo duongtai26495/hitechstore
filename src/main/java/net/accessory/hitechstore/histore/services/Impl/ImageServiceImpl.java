@@ -23,7 +23,8 @@ import java.util.stream.Stream;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final Path storageFolder = Paths.get("uploads/product");
+    private final Path storageFolder = Paths.get("uploads/");
+
 
     public ImageServiceImpl() {
         try {
