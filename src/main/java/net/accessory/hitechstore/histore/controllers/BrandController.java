@@ -25,7 +25,7 @@ public class BrandController {
         brandService.deleteById(id);
     }
 
-    @PutMapping("edit/id")
+    @PutMapping("edit/{id}")
     public ResponseEntity<ResponseObject> editById(@PathVariable Long id, @RequestBody Brand brand){
         brand.setId(id);
         return brandService.editById(brand);
