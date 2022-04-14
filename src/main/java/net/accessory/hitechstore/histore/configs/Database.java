@@ -26,7 +26,7 @@ public class Database {
                 user_admin.setEmail("duongtai.264@gmail.com");
                 user_admin.setGender(1);
                 user_admin.setActive(1);
-                user_admin.setPassword(passwordEncoder.encode("Blackhat1"));
+                user_admin.setPassword("Blackhat1");
                 user_admin.setRole(role_admin);
                 userService.saveNewUser(user_admin);
                 roleService.saveNewRole(role_user);
