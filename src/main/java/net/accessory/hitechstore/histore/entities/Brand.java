@@ -18,6 +18,8 @@ public class Brand {
     @Column(name = "brand_name", length = 20)
     private String name;
 
+    private String code_name;
+
     @JsonIgnore
     @OneToMany(targetEntity = Product.class, mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
@@ -28,9 +30,6 @@ public class Brand {
     }
 
     public String getCode_name() {
-        String code_name = name.toLowerCase();
-        code_name = code_name.trim();
-        code_name = code_name.replace(" ","-");
         return code_name;
     }
 

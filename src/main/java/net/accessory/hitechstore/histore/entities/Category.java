@@ -3,6 +3,7 @@ package net.accessory.hitechstore.histore.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Entity
@@ -29,13 +30,16 @@ public class Category {
 
     private boolean active;
 
+    private String code_name;
+
     public Category() {
     }
 
+    public void setCode_name(String code_name) {
+        this.code_name = code_name;
+    }
+
     public String getCode_name() {
-        String code_name = name.toLowerCase();
-        code_name = code_name.trim();
-        code_name = code_name.replace(" ","-");
         return code_name;
     }
 

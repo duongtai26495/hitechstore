@@ -1,6 +1,7 @@
 package net.accessory.hitechstore.histore.services.Impl;
 
 import net.accessory.hitechstore.histore.entities.Brand;
+import net.accessory.hitechstore.histore.entities.ConvertCodeName;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.repositories.BrandRepository;
 import net.accessory.hitechstore.histore.services.BrandService;
@@ -36,6 +37,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public ResponseEntity<ResponseObject> addNewBrand(Brand brand) {
         if (getUsernameLogin()!=null){
+            brand.setCode_name(ConvertCodeName.convert(brand.getName()));
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("SUCCESS","Create new brand is successful",brandRepository.save(brand))
             );

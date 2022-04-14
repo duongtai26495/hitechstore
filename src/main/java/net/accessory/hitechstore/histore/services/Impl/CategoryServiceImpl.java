@@ -1,6 +1,7 @@
 package net.accessory.hitechstore.histore.services.Impl;
 
 import net.accessory.hitechstore.histore.entities.Category;
+import net.accessory.hitechstore.histore.entities.ConvertCodeName;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.repositories.CategoryRepository;
 import net.accessory.hitechstore.histore.services.CategoryService;
@@ -39,6 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (getUsernameLogin()!=null){
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+            category.setCode_name(ConvertCodeName.convert(category.getName()));
             category.setCreated_at(sdf.format(date));
             category.setLast_edited_at(category.getCreated_at());
             category.setAuthor(getUsernameLogin());
