@@ -30,6 +30,11 @@ public class HomeController {
     @Autowired
     private BrandServiceImpl brandService;
 
+    @GetMapping("profile/{username}")
+    public ResponseEntity<ResponseObject> getProfile(@PathVariable String username){
+        return userService.getProfileByUsername(username);
+    }
+
     @GetMapping("categories")
     public ResponseEntity<ResponseObject> getAll(){
         return categoryService.getAll();

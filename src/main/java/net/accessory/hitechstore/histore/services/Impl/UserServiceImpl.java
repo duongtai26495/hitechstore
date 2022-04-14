@@ -88,5 +88,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         );
     }
 
+    @Override
+    public ResponseEntity<ResponseObject> getProfileByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null){
+            UserDTO userDTO = ConvertUser.convertToDTO(user);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("SUCCESS","User found", userDTO)
+            );
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("FAILED","User not found", null)
+            );
+        }
+    }
+
 
 }

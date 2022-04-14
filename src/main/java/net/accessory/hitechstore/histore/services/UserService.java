@@ -11,6 +11,6 @@ public interface UserService {
 
     ResponseEntity<ResponseObject>  updatePassword(User user);
 
-
+    ResponseEntity<ResponseObject> getProfileByUsername(String username);
 
 }
