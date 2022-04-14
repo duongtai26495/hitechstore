@@ -60,6 +60,9 @@ public class BrandServiceImpl implements BrandService {
     public ResponseEntity<ResponseObject> editById(Brand brand) {
         Brand getBrand = brandRepository.findById(brand.getId()).get();
         getBrand.setName(brand.getName());
+        if (brand.getImage_url() != null){
+            getBrand.setImage_url(brand.getImage_url());
+        }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("SUCCESS","Edit brand success",brandRepository.save(getBrand))
         );
