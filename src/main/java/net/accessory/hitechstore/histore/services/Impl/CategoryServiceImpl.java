@@ -2,6 +2,7 @@ package net.accessory.hitechstore.histore.services.Impl;
 
 import net.accessory.hitechstore.histore.entities.Category;
 import net.accessory.hitechstore.histore.entities.ConvertCodeName;
+import net.accessory.hitechstore.histore.entities.GetCurrentUsername;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.repositories.CategoryRepository;
 import net.accessory.hitechstore.histore.services.CategoryService;
@@ -27,23 +28,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final String DATE_PATTERN = "dd/MM/yy hh:mm:ss";
 
-    private String getUsernameLogin(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return authentication.getName();
-        }
-        return null;
-    }
+
 
     @Override
     public ResponseEntity<ResponseObject> saveNewCategory(Category category) {
-        if (getUsernameLogin()!=null){
+        String currentUsername = GetCurrentUsername.getUsernameLogin();
+        if (currentUsername!=null){
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
             category.setCode_name(ConvertCodeName.convert(category.getName()));
             category.setCreated_at(sdf.format(date));
             category.setLast_edited_at(category.getCreated_at());
-            category.setAuthor(getUsernameLogin());
+            category.setAuthor(currentUsername);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("SUCCESS","Create new category is successful",categoryRepository.save(category))
             );

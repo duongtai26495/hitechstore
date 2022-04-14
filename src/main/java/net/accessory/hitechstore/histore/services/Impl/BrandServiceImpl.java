@@ -2,6 +2,7 @@ package net.accessory.hitechstore.histore.services.Impl;
 
 import net.accessory.hitechstore.histore.entities.Brand;
 import net.accessory.hitechstore.histore.entities.ConvertCodeName;
+import net.accessory.hitechstore.histore.entities.GetCurrentUsername;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.repositories.BrandRepository;
 import net.accessory.hitechstore.histore.services.BrandService;
@@ -26,17 +27,10 @@ public class BrandServiceImpl implements BrandService {
 
     private final String DATE_PATTERN = "dd/MM/yy hh:mm:ss";
 
-    private String getUsernameLogin(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return authentication.getName();
-        }
-        return null;
-    }
-
     @Override
     public ResponseEntity<ResponseObject> addNewBrand(Brand brand) {
-        if (getUsernameLogin()!=null){
+        String currentUsername = GetCurrentUsername.getUsernameLogin();
+        if (currentUsername!=null){
             brand.setCode_name(ConvertCodeName.convert(brand.getName()));
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("SUCCESS","Create new brand is successful",brandRepository.save(brand))
