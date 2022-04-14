@@ -5,10 +5,7 @@ import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.services.Impl.BrandServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/brand/")
@@ -21,5 +18,10 @@ public class BrandController {
     @PostMapping("new")
     public ResponseEntity<ResponseObject> newBrand (@RequestBody Brand brand){
         return brandService.addNewBrand(brand);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteById (@PathVariable Long id){
+        brandService.deleteById(id);
     }
 }
