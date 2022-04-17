@@ -1,9 +1,11 @@
 package net.accessory.hitechstore.histore.controllers;
 
 import net.accessory.hitechstore.histore.entities.Product;
+import net.accessory.hitechstore.histore.entities.ProductImage;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.services.Impl.CategoryServiceImpl;
 import net.accessory.hitechstore.histore.services.Impl.ImageServiceImpl;
+import net.accessory.hitechstore.histore.services.Impl.ProductImageServiceImpl;
 import net.accessory.hitechstore.histore.services.Impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,8 @@ public class ProductController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
+    @Autowired
+    private ProductImageServiceImpl productImageService;
 
     @PostMapping("uploadImage")
     public String uploadImage(@RequestParam("image")MultipartFile file){
@@ -53,5 +57,10 @@ public class ProductController {
     @DeleteMapping("delete/{id}")
     public ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id){
         return productService.deleteById(id);
+    }
+
+    @PostMapping("add_image")
+    public ResponseEntity<ResponseObject> addImageProduct (@RequestBody ProductImage productImage){
+        return productImageService.saveImageWithProductId(productImage);
     }
 }

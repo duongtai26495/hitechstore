@@ -1,6 +1,7 @@
 package net.accessory.hitechstore.histore.services.Impl;
 
 import net.accessory.hitechstore.histore.entities.Product;
+import net.accessory.hitechstore.histore.entities.ProductImage;
 import net.accessory.hitechstore.histore.entities.ResponseObject;
 import net.accessory.hitechstore.histore.entities.User;
 import net.accessory.hitechstore.histore.repositories.ProductRepository;
@@ -26,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductImageServiceImpl productImageService;
 
     private final String DATE_PATTERN = "dd/mm/yy hh:mm:ss";
 

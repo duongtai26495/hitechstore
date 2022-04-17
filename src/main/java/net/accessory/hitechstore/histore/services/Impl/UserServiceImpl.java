@@ -98,8 +98,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public ResponseEntity<ResponseObject> getProfileByUsername(String username) {
-        if (GetCurrentUsername.getUsernameLogin() != null ||
-                GetCurrentUsername.getUsernameLogin().equals(username)) {
+        if (username != null) {
             User user = userRepository.findByUsername(username);
             UserDTO userDTO = ConvertUser.convertToDTO(user);
             return ResponseEntity.status(HttpStatus.OK).body(

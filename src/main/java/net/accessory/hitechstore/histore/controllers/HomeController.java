@@ -1,9 +1,6 @@
 package net.accessory.hitechstore.histore.controllers;
 
-import net.accessory.hitechstore.histore.entities.Brand;
-import net.accessory.hitechstore.histore.entities.Product;
-import net.accessory.hitechstore.histore.entities.ResponseObject;
-import net.accessory.hitechstore.histore.entities.User;
+import net.accessory.hitechstore.histore.entities.*;
 import net.accessory.hitechstore.histore.services.Impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +26,9 @@ public class HomeController {
 
     @Autowired
     private BrandServiceImpl brandService;
+
+    @Autowired
+    private ProductImageServiceImpl productImageService;
 
     @GetMapping("profile/{username}")
     public ResponseEntity<ResponseObject> getProfile(@PathVariable String username){
@@ -65,6 +65,11 @@ public class HomeController {
     @GetMapping("products/{id}")
     public ResponseEntity<ResponseObject> getProductById(@PathVariable("id") Long id){
         return productService.getProductById(id);
+    }
+
+    @GetMapping("images_product/{id}")
+    public List<String> allImageProduct(@PathVariable Long id){
+        return productImageService.getAllImageByProductId(id);
     }
 
     @GetMapping("images/{fileName:.+}")

@@ -1,6 +1,10 @@
 package net.accessory.hitechstore.histore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Products")
@@ -35,6 +39,10 @@ public class Product {
 
     private String last_edited_at;
 
+    @OneToMany(targetEntity = ProductImage.class, mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore()
+    private List<ProductImage> images;
+
     @Column(name = "description", length = 1000)
     private String description;
 
@@ -44,6 +52,14 @@ public class Product {
     @ManyToOne()
     @JoinColumn(name = "brand", referencedColumnName = "brand_id")
     private Brand brand;
+
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
 
     public String getDescription() {
         return description;

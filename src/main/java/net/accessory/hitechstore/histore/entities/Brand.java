@@ -34,6 +34,7 @@ public class Brand {
     }
 
     public void setCode_name(String code_name) {
+        this.code_name = code_name;
     }
 
     public String getImage_url() {
